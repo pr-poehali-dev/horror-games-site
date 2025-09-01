@@ -9,22 +9,49 @@ const Index = () => {
       title: "Resident Evil 4 Remake",
       rating: "9.5",
       genre: "Survival Horror",
-      description: "Переосмысленная классика, которая устанавливает новые стандарты жанра",
-      status: "Новый обзор"
+      description: "Переосмысленная классика, которая устанавливает новые стандарты жанра. Capcom превзошла сама себя, создав идеальный баланс между ностальгией и современными технологиями.",
+      status: "Новый обзор",
+      image: "/img/f96f6cfb-ef9c-469a-ba49-b42285edbd7d.jpg",
+      details: {
+        developer: "Capcom",
+        releaseDate: "24 марта 2023",
+        platforms: "PC, PS5, Xbox Series X/S",
+        playTime: "15-20 часов",
+        pros: ["Потрясающая графика", "Отличный геймплей", "Атмосферный саундтрек"],
+        cons: ["Высокие системные требования", "Некоторые изменения в сюжете"]
+      }
     },
     {
       title: "Dead Space (2023)",
       rating: "9.0",
       genre: "Sci-Fi Horror",
-      description: "Полное переосмысление космического кошмара с невероятной атмосферой",
-      status: "Обновлено"
+      description: "Полное переосмысление космического кошмара с невероятной атмосферой. EA Motive воссоздала легендарную игру с нуля, сохранив её душу но улучшив каждый аспект.",
+      status: "Обновлено",
+      image: "/img/377169a7-a843-466a-b10e-d962949e95e1.jpg",
+      details: {
+        developer: "EA Motive",
+        releaseDate: "27 января 2023",
+        platforms: "PC, PS5, Xbox Series X/S",
+        playTime: "12-15 часов",
+        pros: ["Невероятная атмосфера", "Улучшенная графика", "Отличный звуковой дизайн"],
+        cons: ["Может быть слишком страшно для новичков", "Линейный геймплей"]
+      }
     },
     {
       title: "Phasmophobia",
       rating: "8.5",
       genre: "Co-op Horror",
-      description: "Охота на призраков в команде - новый уровень страха и веселья",
-      status: "Гайд"
+      description: "Охота на призраков в команде - новый уровень страха и веселья. Kinetic Games создала уникальный опыт кооперативного хоррора, который лучше всего играть с друзьями.",
+      status: "Гайд",
+      image: "/img/5f1bd8ef-144d-40a8-836e-839eafb935e3.jpg",
+      details: {
+        developer: "Kinetic Games",
+        releaseDate: "18 сентября 2020",
+        platforms: "PC, PlayStation 5, Xbox Series X/S",
+        playTime: "Бесконечный",
+        pros: ["Отличный кооператив", "Уникальная механика", "Постоянные обновления"],
+        cons: ["Нужны друзья для игры", "Может надоесть со временем"]
+      }
     }
   ];
 
@@ -111,28 +138,83 @@ const Index = () => {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredGames.map((game, index) => (
-              <Card key={index} className="bg-card/50 backdrop-blur border-border/50 hover:border-primary/50 transition-all duration-300 hover:scale-105 group">
-                <CardHeader>
-                  <div className="flex items-center justify-between mb-2">
-                    <Badge variant="secondary" className="bg-primary/20 text-primary">
+              <Card key={index} className="bg-card/50 backdrop-blur border-border/50 hover:border-primary/50 transition-all duration-300 hover:scale-105 group overflow-hidden">
+                {/* Game Image */}
+                <div className="aspect-video relative overflow-hidden">
+                  <img 
+                    src={game.image} 
+                    alt={game.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <div className="absolute top-4 left-4 flex items-center space-x-2">
+                    <Badge variant="secondary" className="bg-primary/20 text-primary backdrop-blur">
                       {game.status}
                     </Badge>
-                    <div className="flex items-center space-x-1">
-                      <Icon name="Star" size={16} className="text-yellow-500 fill-current" />
-                      <span className="font-bold text-lg">{game.rating}</span>
-                    </div>
                   </div>
+                  <div className="absolute top-4 right-4 flex items-center space-x-1 bg-black/40 backdrop-blur rounded-full px-2 py-1">
+                    <Icon name="Star" size={16} className="text-yellow-500 fill-current" />
+                    <span className="font-bold text-white">{game.rating}</span>
+                  </div>
+                </div>
+
+                <CardHeader className="pb-3">
                   <CardTitle className="text-xl group-hover:text-primary transition-colors">
                     {game.title}
                   </CardTitle>
                   <CardDescription className="text-primary/80">
-                    {game.genre}
+                    {game.genre} • {game.details?.developer}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-4">{game.description}</p>
+
+                <CardContent className="space-y-4">
+                  <p className="text-sm text-muted-foreground line-clamp-3">{game.description}</p>
+                  
+                  {/* Game Details */}
+                  <div className="space-y-2 text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Дата выхода:</span>
+                      <span>{game.details?.releaseDate}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Время игры:</span>
+                      <span>{game.details?.playTime}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Платформы:</span>
+                      <span className="text-right">{game.details?.platforms}</span>
+                    </div>
+                  </div>
+
+                  {/* Pros and Cons */}
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div>
+                      <div className="text-green-400 font-semibold mb-1 flex items-center">
+                        <Icon name="Plus" size={12} className="mr-1" />
+                        Плюсы
+                      </div>
+                      <ul className="space-y-1">
+                        {game.details?.pros.slice(0, 2).map((pro, i) => (
+                          <li key={i} className="text-muted-foreground">• {pro}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <div className="text-red-400 font-semibold mb-1 flex items-center">
+                        <Icon name="Minus" size={12} className="mr-1" />
+                        Минусы
+                      </div>
+                      <ul className="space-y-1">
+                        {game.details?.cons.slice(0, 2).map((con, i) => (
+                          <li key={i} className="text-muted-foreground">• {con}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
                   <Button variant="outline" size="sm" className="w-full group-hover:bg-primary group-hover:text-primary-foreground">
-                    Читать обзор
+                    <Icon name="BookOpen" size={16} className="mr-2" />
+                    Читать полный обзор
                   </Button>
                 </CardContent>
               </Card>
